@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const ctrlMain = require('../controllers/main');
+// Controlers
+const home = require('../controllers/home'); // Home controler
+const about = require('../controllers/about'); // About controler
 
-router.get('/', ctrlMain.index); // Home page
+// Routes
+router.get('/', home.index); // Home page
+router.get('/about', about.index); // About page
 
+// Export router
 module.exports = router;
