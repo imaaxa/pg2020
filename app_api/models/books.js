@@ -60,7 +60,7 @@ const bookSchema = new mongoose.Schema({
   },
   series: String,
   seriesVolume: Number,
-  genre: genre,
+  genre: genreSchema,
   author: {
     type: String,
     'default': 'Patricia Gilliam'
