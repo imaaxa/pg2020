@@ -26,6 +26,7 @@ const booksDeleteOne = (req, res) => {
   res.status(200).json({"status": "success"});
 };
 
+// Export Book functions
 module.exports = {
   booksAll,
   booksCreate,
