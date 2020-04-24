@@ -3,6 +3,7 @@ const router = express.Router();
 
 const ctrlBooks = require('../controllers/books');
 const ctrlReviews = require('../controllers/reviews');
+const ctrlGenres = require('../controllers/genres');
 
 // Books: Get, Create
 router.route('/books')
@@ -24,5 +25,16 @@ router.route('/books/:bookId/reviews/:reviewId')
   .get(ctrlReviews.reviewsReadOne)
   .put(ctrlReviews.reviewsUpdateOne)
   .delete(ctrlReviews.reviewsDeleteOne);
+
+// Genres: Get all, Create
+router.route('/genres')
+  .get(ctrlGenres.genresAll)
+  .post(ctrlGenres.genresCreate);
+
+// Genres: Get one, Update one, Delete one
+router.route('/genres/:genreId')
+  .get(ctrlGenres.genresOne)
+  .put(ctrlGenres.genresUpdateOne)
+  .delete(ctrlGenres.genresDeleteOne);
 
 module.exports = router;
