@@ -11,6 +11,10 @@ const reviewSchema = new mongoose.Schema({
     max: 5
   },
   reviewText: String,
+  active: {
+    type: Boolean,
+    'default': true
+  },
   createdOn: {
     type: Date,
     'default': Date.now
@@ -28,6 +32,23 @@ const formatSchema = new mongoose.Schema({
   cost: {
     type: Number,
     required: true
+  },
+  active: {
+    type: Boolean,
+    'default': true
+  }
+});
+
+// Genre Schema
+const genreSchema = new mongoose.Schema({
+  genre: {
+    type: String,
+    required: true,
+    'default': 'Science Fiction'
+  },
+  active: {
+    type: Boolean,
+    'default': true
   }
 });
 
@@ -39,10 +60,7 @@ const bookSchema = new mongoose.Schema({
   },
   series: String,
   seriesVolume: Number,
-  genre: {
-    type: String,
-    'default': 'Science Fiction'
-  },
+  genre: genre,
   author: {
     type: String,
     'default': 'Patricia Gilliam'
@@ -57,6 +75,10 @@ const bookSchema = new mongoose.Schema({
   language: {
     type: 'String',
     'default': 'English'
+  },
+  active: {
+    type: Boolean,
+    'default': true
   },
   formats: [formatSchema],
   reviews: [reviewSchema]
