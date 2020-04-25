@@ -19,8 +19,8 @@ const genresAll = (req, res) => {
     });
 };
 
-// Genres: Get Available
-const genresAvailable = (req, res) => {
+// Genres: Get Active
+const genresActive = (req, res) => {
   Genre
     .find({active: "true"})
     .exec((err, genres) => {
