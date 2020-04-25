@@ -149,7 +149,7 @@ function _isActive(data = 'undefined') {
 // Export Genre functions
 module.exports = {
   genresAll,
-  genresAvailable,
+  genresActive,
   genresCreate,
   genresOne,
   genresUpdateOne,
