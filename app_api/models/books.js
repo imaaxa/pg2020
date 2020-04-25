@@ -39,19 +39,6 @@ const formatSchema = new mongoose.Schema({
   }
 });
 
-// Genre Schema
-const genreSchema = new mongoose.Schema({
-  genre: {
-    type: String,
-    required: true,
-    'default': 'Science Fiction'
-  },
-  active: {
-    type: Boolean,
-    'default': true
-  }
-});
-
 // Book Schema
 const bookSchema = new mongoose.Schema({
   title: {
@@ -60,7 +47,10 @@ const bookSchema = new mongoose.Schema({
   },
   series: String,
   seriesVolume: Number,
-  genre: genreSchema,
+  genre: {
+    type: String,
+    'default': 'Science Fiction'
+  },
   author: {
     type: String,
     'default': 'Patricia Gilliam'
@@ -85,4 +75,4 @@ const bookSchema = new mongoose.Schema({
 });
 
 // Compiling a model from a schema
-mongoose.model('Book', bookSchema);
+mongoose.model('Book', bookSchema, 'Books');
