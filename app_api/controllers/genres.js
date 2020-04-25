@@ -8,7 +8,7 @@ const genresAll = (req, res) => {
     .exec((err, genres) => {
       // Test for no results and error
       if (!genres) {
-        return res.status(404).json({"message": "genres not found"});
+        return res.status(404).json({"message": "Genres not found"});
       } else if (err) {
         return res.status(404).json(err);
       }
@@ -39,6 +39,7 @@ const genresAvailable = (req, res) => {
 
 // Genres: Create
 const genresCreate = (req, res) => {
+  // Create data object
   let active = true;
   if (req.body.active !== 'undefined') {
     active = req.body.active;
@@ -48,6 +49,7 @@ const genresCreate = (req, res) => {
     "active": active
   };
 
+  // Create genre record
   Genre
     .create(data, (err, genre) => {
       if (err) {
