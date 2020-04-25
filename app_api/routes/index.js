@@ -31,6 +31,10 @@ router.route('/genres')
   .get(ctrlGenres.genresAll)
   .post(ctrlGenres.genresCreate);
 
+// Genres: Get all, Create
+router.route('/genres/active')
+  .get(ctrlGenres.genresAvailable);
+
 // Genres: Get one, Update one, Delete one
 router.route('/genres/:genreId')
   .get(ctrlGenres.genresOne)
