@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Book= mongoose.model('Book');
+const Book = mongoose.model('Book');
 
 // Review: Create
 const reviewsCreate = (req, res) => {

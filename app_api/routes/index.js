@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const ctrlBooks = require('../controllers/books');
-const ctrlReviews = require('../controllers/reviews');
+const ctrlFormats = require('../controllers/formats');
 const ctrlGenres = require('../controllers/genres');
+const ctrlReviews = require('../controllers/reviews');
 
+// Books:
 // Books: Get, Create
 router.route('/books')
   .get(ctrlBooks.booksAll)
@@ -20,6 +22,21 @@ router.route('/books/:bookId')
   .put(ctrlBooks.booksUpdateOne)
   .delete(ctrlBooks.booksDeleteOne);
 
+
+// Formats:
+// Formats: Get, Create
+router.route('/fomat/:bookId')
+  .get(ctrlFormats.formatsAll)
+  .post(ctrlFormats.formatsCreate);
+
+// Formats: Get one, Update one, Delete one
+router.route('/format/:bookId/:formatId')
+  .get(ctrlFormats.formatsReadOne)
+  .put(ctrlFormats.formatsUpdateOne)
+  .delete(ctrlFormats.formatsDeleteOne);
+
+
+// Reviews:
 // Reviews: Create
 router.route('/books/:bookId/reviews')
   .post(ctrlReviews.reviewsCreate);
@@ -45,4 +62,6 @@ router.route('/genres/:genreId')
   .put(ctrlGenres.genresUpdateOne)
   .delete(ctrlGenres.genresDeleteOne);
 
+
+// Export the router
 module.exports = router;
