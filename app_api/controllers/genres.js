@@ -40,10 +40,7 @@ const genresAvailable = (req, res) => {
 // Genres: Create
 const genresCreate = (req, res) => {
   // Create data object
-  let active = true;
-  if (req.body.active !== 'undefined') {
-    active = req.body.active;
-  }
+  const active = _isActive(req.body.active);
   const data = {
     "genre": req.body.genre,
     "active": active
@@ -65,6 +62,7 @@ const genresCreate = (req, res) => {
 const genresOne = (req, res) => {
   const genreId = req.params.genreId;
 
+  // Find genre by id
   Genre
     .findById(genreId)
     .exec((err, genre) => {
@@ -84,8 +82,6 @@ const genresOne = (req, res) => {
 // Genres: Update one
 const genresUpdateOne = (req, res) => {
   const genreId = req.params.genreId;
-  const newGenreValue = req.body.genre;
-  const newActiveValue = req.body.active;
 
   // Find specific record to update
   Genre
@@ -98,9 +94,9 @@ const genresUpdateOne = (req, res) => {
         return res.status(404).json(err);
       }
 
-      // Change value and save
-      genre.genre = newGenreValue;
-      genre.active = newActiveValue;
+      // Change values and save
+      genre.genre = req.body.genre;
+      genre.active = _isActive(req.body.active);
 
       genre
         .save((err, results) => {
@@ -109,7 +105,7 @@ const genresUpdateOne = (req, res) => {
           } else {
             // Return results
             console.log('Genre has been updated');
-            res.status(200).json(genre);
+            res.status(200).json(results);
           }
         });
     });
@@ -118,7 +114,6 @@ const genresUpdateOne = (req, res) => {
 // Genres: Delete one
 const genresDeleteOne = (req, res) => {
   const genreId = req.params.genreId;
-  const newActiveValue = req.body.active;
 
   // Find specific record to update
   Genre
@@ -126,15 +121,13 @@ const genresDeleteOne = (req, res) => {
     .exec((err, genre) => {
       // Test for no results and error
       if (!genre) {
-        return res.status(404).json({
-          "message": "Genre not found"
-        });
+        return res.status(404).json({"message": "Genre not found"});
       } else if (err) {
         return res.status(404).json(err);
       }
 
       // Change active status and save
-      genre.active = newActiveValue;
+      genre.active = _isActive(req.body.active);
       genre
         .save((err, results) => {
           if (err) {
@@ -142,11 +135,16 @@ const genresDeleteOne = (req, res) => {
           } else {
             // Return results
             console.log('Genre active status saved');
-            res.status(200).json(genre);
+            res.status(200).json(results);
           }
         });
     });
 };
+
+// Determin active
+function _isActive(data = 'undefined') {
+  return (data !== 'undefined') ? data : true;
+}
 
 // Export Genre functions
 module.exports = {
