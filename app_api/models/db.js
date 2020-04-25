@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // Set dbURI based upon dev || production
-let dbURI = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false';
+let dbURI = 'mongodb://localhost:27017/pg2020';
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGODB_URI;
 }
@@ -55,3 +55,4 @@ process.on('SIGTERM', () => {
 
 // Models
 require('./books');
+require('./genres');
