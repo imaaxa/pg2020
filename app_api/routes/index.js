@@ -10,6 +10,10 @@ router.route('/books')
   .get(ctrlBooks.booksAll)
   .post(ctrlBooks.booksCreate);
 
+  // Books: Get active
+  router.route('/books/active')
+    .get(ctrlBooks.booksActive);
+
 // Books: Get one, Update one, Delete one
 router.route('/books/:bookId')
   .get(ctrlBooks.booksOne)
@@ -31,9 +35,9 @@ router.route('/genres')
   .get(ctrlGenres.genresAll)
   .post(ctrlGenres.genresCreate);
 
-// Genres: Get all, Create
+// Genres: Get active
 router.route('/genres/active')
-  .get(ctrlGenres.genresAvailable);
+  .get(ctrlGenres.genresActive);
 
 // Genres: Get one, Update one, Delete one
 router.route('/genres/:genreId')

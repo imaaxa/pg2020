@@ -55,7 +55,7 @@ const bookSchema = new mongoose.Schema({
     type: String,
     'default': 'Patricia Gilliam'
   },
-  pubDate: {
+  publishDate: {
     type: Date,
     required: true
   },
