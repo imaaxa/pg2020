@@ -27,8 +27,30 @@ const doAddFormat = (req, res, book) => {
 
 // Format: Get all
 const formatsAll = (req, res) => {
-  res.status(200).json(req.params);
-};
+    const bookId = req.params.bookId;
+
+    // Test if the book id is present
+    if (!bookId) {
+      return res.status(404).json({"message": "Not found. Book and format are both required"});
+    }
+
+    // Get the formats for the book
+    Book
+      .findById(bookId)
+      .select('formats')
+      .exec((err, book) => {
+        // Test for no results or error
+        if (!book) {
+          return res.status(404).json({
+            "message": "Book not found"
+          });
+        } else if (err) {
+          return res.status(400).json(err);
+        }
+
+        res.status(200).json(book.formats);
+      });
+}; // Working
 
 // Format: Create
 const formatsCreate = (req, res) => {
