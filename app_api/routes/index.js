@@ -25,12 +25,12 @@ const ctrlReviews = require('../controllers/reviews');
 
 // Formats:
   // Formats: Get, Create
-  router.route('/books/:bookId/fomat')
+  router.route('/books/:bookId/format')
     .get(ctrlFormats.formatsAll)
     .post(ctrlFormats.formatsCreate);
 
   // Formats: Get one, Update one, Delete one
-  router.route('/books/:bookId/fomat/:formatId')
+  router.route('/books/:bookId/format/:formatId')
     .get(ctrlFormats.formatsReadOne)
     .put(ctrlFormats.formatsUpdateOne)
     .delete(ctrlFormats.formatsDeleteOne);
