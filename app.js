@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const express = require('express');
