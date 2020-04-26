@@ -23,7 +23,7 @@ const doAddFormat = (req, res, book) => {
       }
     });
   }
-};
+}; // Working
 
 // Format: Get all
 const formatsAll = (req, res) => {
@@ -75,26 +75,40 @@ const formatsCreate = (req, res) => {
 
 // Format: ReadOne
 const formatsReadOne = (req, res, next) => {
-  /*const bookId = req.params.bookId;
+  const bookId = req.params.bookId;
   const formatId = req.params.formatId;
 
-  // Find book by id
+  // Test if the book id and format id are present
+  if (!bookId || !formatId) {
+    return res.status(404).json({"message": "Not found. Book and format are both required"});
+  }
+
+  // Get the formats for the book
   Book
     .findById(bookId)
     .select('formats')
-    .exec((err, formats) => {
-      // Test for no results and error
-      if (!formats) {
-        return res.status(404).json({"message": "Formats not found"});
+    .exec((err, book) => {
+
+      // Test for no results or error
+      if (!book) {
+        return res.status(404).json({"message": "Book not found"});
       } else if (err) {
-        return res.status(404).json(err);
+        return res.status(400).json(err);
       }
 
-      // Return format that matches formatId
-      res.status(200).json(formats);
-    });*/
-    res.status(200).json({"messagge": "Success"});
-};
+      // Tests book format existance and greater than 0
+      if (book.formats && book.formats.length > 0) {
+        if (!book.formats.id(formatId)) {
+          return res.status(404).json({"message": "Format not found"});
+        } else {
+          // Return the specific format from the array
+          res.status(200).json(book.formats.id(formatId));
+        }
+      } else {
+        res.status(404).json({"message": "No formats to return"});
+      }
+    });
+}; // Working
 
 // Format: UpdateOne
 const formatsUpdateOne = (req, res) => {
@@ -142,7 +156,7 @@ const formatsDeleteOne = (req, res) => {
         });
       }
     } else {
-      res.status(404).json({"message": "No Review to delete"});
+      res.status(404).json({"message": "No format to delete"});
     }
   });
 }; // Working
