@@ -27,26 +27,7 @@ const doAddFormat = (req, res, book) => {
 
 // Format: Get all
 const formatsAll = (req, res) => {
-  const bookId = req.params.bookId;
-
-  // Find book by id
-  Book
-    .findById(bookId)
-    .select('formats')
-    .exec((err, formats) => {
-      // Test for no results and error
-      if (!formats) {
-        return res.status(404).json({
-          "message": "Formats not found"
-        });
-      } else if (err) {
-        return res.status(404).json(err);
-      }
-
-      // Return results
-      console.log('Formats have been found');
-      res.status(200).json(formats);
-    });
+  res.status(200).json(req.params);
 };
 
 // Format: Create
@@ -68,7 +49,7 @@ const formatsCreate = (req, res) => {
       }
 
     });
-};
+}; // Working
 
 // Format: ReadOne
 const formatsReadOne = (req, res, next) => {
@@ -95,61 +76,12 @@ const formatsReadOne = (req, res, next) => {
 
 // Format: UpdateOne
 const formatsUpdateOne = (req, res) => {
-  res.status(200).json(req.params.bookId);
-  /*const bookId = req.params.bookId;
-  const formatId = req.params.formatId;
-
-  if (!bookId || !formatId) {
-    return res.status(404).json({"messagge": "Not found, book id and format id are both required"});
-  }
-
-  Book
-    .findById(bookId)
-    .select('formats')
-    .exec((err, book) => {
-      // Test for no results and error
-      if (!book) {
-        return res.status(404).json({"messagge": "Book not found"});
-      } else if (err) {
-        return res.status(404).json(err);
-      }
-
-      // Test if formats was returned, 404 if not
-      if (book.formats && book.formats > 0) {
-        const thisFormat = book.fomats.id(formatId);
-
-        // Test if given id exist inside the format objects
-        if (!thisFormat) {
-          return res.status(404).json({"messagge": "Format not found"});
-        } else if (err) {
-          return res.status(404).json(err);
-        } else {
-          // Set new values
-          thisFormat.format = req.body.format;
-          thisFormat.pages = req.body.pages;
-          thisFormat.formatLink = req.body.formatLink;
-          thisFormat.cost = req.body.cost;
-          thisFormat.active = _isActive(req.body.active);
-
-          // Save book
-          book
-            .save((err, book) => {
-              if (err) {
-                return res.status(404).json({"messagge": "Format not found"});
-              } else if (err) {
-                return res.status(200).json(book);
-              }
-            });
-        }
-      } else {
-        return res.status(404).json({"messagge": "No format to update"});
-      }
-    });//*/
+  res.status(200).json(req.params);
 };
 
 // Format: DeleteOne
 const formatsDeleteOne = (req, res) => {
-  res.status(200).json({"status": "success"});
+  res.status(200).json(req.params);
 };
 
 // Determin active

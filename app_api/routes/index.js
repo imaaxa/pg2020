@@ -25,12 +25,12 @@ router.route('/books/:bookId')
 
 // Formats:
 // Formats: Get, Create
-router.route('/fomat/:bookId')
+router.route('/books/:bookId/fomat')
   .get(ctrlFormats.formatsAll)
   .post(ctrlFormats.formatsCreate);
 
 // Formats: Get one, Update one, Delete one
-router.route('/format/:bookId/:formatId')
+router.route('/books/:bookId/fomat/:formatId')
   .get(ctrlFormats.formatsReadOne)
   .put(ctrlFormats.formatsUpdateOne)
   .delete(ctrlFormats.formatsDeleteOne);
