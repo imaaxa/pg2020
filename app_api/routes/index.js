@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const ctrlBlogs = require('../controllers/blog');
 const ctrlBooks = require('../controllers/books');
 const ctrlFormats = require('../controllers/formats');
 const ctrlGenres = require('../controllers/genres');
@@ -65,6 +66,23 @@ const ctrlReviews = require('../controllers/reviews');
     .put(ctrlGenres.genresUpdateOne)
     .delete(ctrlGenres.genresDeleteOne);
 // End Genres
+
+// Blog:
+  // Blog: Get, Create
+  router.route('/blog')
+    .get(ctrlBlogs.blogsAll)
+    .get(ctrlBlogs.blogsCreate);
+
+  // Blog: Get active
+  router.route('/blog/active')
+    .get(ctrlBlogs.blogsActive);
+
+  // Blog: Get one, Update One, Delete one
+  router.route('/blog/:blogId')
+    .get(ctrlBlogs.blogsOne)
+    .get(ctrlBlogs.blogsUpdateOne)
+    .get(ctrlBlogs.blogsDeleteOne);
+// End Blog:
 
 // Export the router
 module.exports = router;
