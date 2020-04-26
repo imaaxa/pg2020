@@ -81,7 +81,48 @@ const formatsUpdateOne = (req, res) => {
 
 // Format: DeleteOne
 const formatsDeleteOne = (req, res) => {
-  res.status(200).json(req.params);
+  const bookId = req.params.bookId;
+  const formatId = req.params.formatId;
+
+  // Test if the book id and format id are present
+  if (!bookId || !formatId) {
+    return res.status(404).json({"message": "Not found. Book and format are both required"});
+  }
+
+  // Start the process for delete
+  Book
+  .findById(bookId)
+  .select('formats')
+  .exec((err, book) => {
+
+    // Test for no results or error
+    if (!book) {
+      return res.status(404).json({"message": "Book not found"});
+    } else if (err) {
+      return res.status(400).json(err);
+    }
+
+    // Tests book format existance and greater than 0
+    if (book.formats && book.formats.length > 0) {
+      if (!book.formats.id(formatId)) {
+        return res.status(404).json({"message": "Format not found"});
+      } else {
+        // Remove the specific format from the array
+        book.formats.id(formatId).remove();
+
+        // Save the book
+        book.save(err => {
+          if (err) {
+            res.status(404).json(err);
+          } else {
+            res.status(204).json(null);
+          }
+        });
+      }
+    } else {
+      res.status(404).json({"message": "No Review to delete"});
+    }
+  });
 };
 
 // Determin active
