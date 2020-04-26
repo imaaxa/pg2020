@@ -4,7 +4,12 @@ const mongoose = require('mongoose');
 // Set dbURI based upon dev || production
 let dbURI = 'mongodb://localhost:27017/pg2020';
 if (process.env.NODE_ENV === 'production') {
-  dbURI = process.env.MONGODB_URI;
+  //dbURI = process.env.MONGODB_URI;
+  dbUsername = process.env.DB_USERNAME;
+  dbPassword = process.env.DB_PASSWORD;
+  dbTable = process.env.DB_TABLE;
+
+  dbURI = 'mongodb + srv: //' + dbUsername + ':' + dbPassword + '@cluster0-yvrwa.mongodb.net/' + dbTable;
 }
 
 // Open Mongoose connection
