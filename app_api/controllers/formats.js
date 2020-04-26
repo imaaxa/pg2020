@@ -123,7 +123,7 @@ const formatsDeleteOne = (req, res) => {
       res.status(404).json({"message": "No Review to delete"});
     }
   });
-};
+}; // Working
 
 // Determin active
 function _isActive(data = 'undefined') {
