@@ -59,5 +59,6 @@ process.on('SIGTERM', () => {
 });
 
 // Models
+require('./blogs');
 require('./books');
 require('./genres');
