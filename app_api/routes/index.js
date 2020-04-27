@@ -11,14 +11,15 @@ const router = express.Router();
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       //const type = req.body.type;
-      console.log(req);
+      const component = req.route.path.substring(1);
 
       // Make directory for the image
-      const imageDir = path.join(__dirname, '../../public/images/blogs/' + new Date().getFullYear() + '/' + new Date().getMonth() + '/');
+      const imageDir =
+        path.join(__dirname, '../../public/images/' + component + '/' + new Date().getFullYear() + '/' + new Date().getMonth() + '/');
 
       // Create directory if it does not exist
       if (!fs.existsSync(imageDir)) {
-        fs.mkdirSync(imageDir);
+        fs.mkdirSync(imageDir, {recursive: true});
       }
 
       // Pass that to the callback function
