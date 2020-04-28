@@ -11,7 +11,7 @@ const blogsAll = (req, res) => {
     .exec((err, blogs) => {
       // Test for no results and error
       if (!blogs) {
-        return res.status(404).json({"message": "Genres not found"});
+        return res.status(404).json({"message": "Blogs not found"});
       } else if (err) {
         return res.status(404).json(err);
       }
@@ -30,9 +30,7 @@ const blogsActive = (req, res) => {
     .exec((err, blogs) => {
       // Test for no results and error
       if (!blogs) {
-        return res.status(404).json({
-          "message": "Genres not found"
-        });
+        return res.status(404).json({"message": "Blogs not found"});
       } else if (err) {
         return res.status(404).json(err);
       }
@@ -75,8 +73,25 @@ const blogsCreate = (req, res) => {
 
 // Blogs: Get One
 const blogsOne = (req, res) => {
-  res.status(200).json({"message": "blogsOne: success"});
-};
+  const blogId = req.params.blogId;
+
+  Blog
+    .findById(blogId)
+    .exec((err, blogs) => {
+      // Test for no results and error
+      if (!blogs) {
+        return res.status(404).json({
+          "message": "Blog not found"
+        });
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Return results
+      console.log('Blogs have been found');
+      res.status(200).json(blogs);
+    });
+}; // Working
 
 // Blogs: Update One
 const blogsUpdateOne = (req, res) => {
@@ -85,8 +100,33 @@ const blogsUpdateOne = (req, res) => {
 
 // Blogs: Delete One
 const blogsDeleteOne = (req, res) => {
-  res.status(200).json({"message": "blogsDeleteOne: success"});
-};
+  const blogId = req.params.blogId;
+
+  // Find specific record to update
+  Blog
+    .findById(blogId)
+    .exec((err, blog) => {
+      // Test for no results and error
+      if (!blog) {
+        return res.status(404).json({"message": "Blog not found"});
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Change active status and save
+      blog.active = _isActive(req.body.active);
+      blog
+        .save((err, results) => {
+          if (err) {
+            res.status(400).json(err);
+          } else {
+            // Return results
+            console.log('Blot active status saved');
+            res.status(200).json(results);
+          }
+        });
+    });
+}; // Working
 
 // Determin active
 function _isActive(data = 'undefined') {
