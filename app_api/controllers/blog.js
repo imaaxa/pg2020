@@ -5,13 +5,43 @@ const Blog = mongoose.model('Blog');
 
 // Blogs: Get all
 const blogsAll = (req, res) => {
-  res.status(200).json({"message": "blogsAll: success"});
-};
+  Blog
+    .find()
+    .sort({'created': -1})
+    .exec((err, blogs) => {
+      // Test for no results and error
+      if (!blogs) {
+        return res.status(404).json({"message": "Genres not found"});
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Return results
+      console.log('Blogs have been found');
+      res.status(200).json(blogs);
+    });
+}; // Working
 
 // Blogs: Blogs Active
 const blogsActive = (req, res) => {
-  res.status(200).json({"message": "blogsActive: success"});
-};
+  Blog
+    .find({'active': true})
+    .sort({'created': -1})
+    .exec((err, blogs) => {
+      // Test for no results and error
+      if (!blogs) {
+        return res.status(404).json({
+          "message": "Genres not found"
+        });
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Return results
+      console.log('Blogs have been found');
+      res.status(200).json(blogs);
+    });
+}; // Working
 
 // Blogs: Create
 const blogsCreate = (req, res) => {
@@ -41,7 +71,7 @@ const blogsCreate = (req, res) => {
         res.status(201).json(blog);
       }
     });
-};
+}; // Working
 
 // Blogs: Get One
 const blogsOne = (req, res) => {
