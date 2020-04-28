@@ -15,8 +15,32 @@ const blogsActive = (req, res) => {
 
 // Blogs: Create
 const blogsCreate = (req, res) => {
-  console.log(req.file);
-  res.status(200).json({"message": "blogsCreate: success"});
+  // Create data object
+  const path = require('path');
+  const remove = path.join(__dirname, '..', '..', 'public/');
+  const imageLocation = req.file.path.replace(remove, '');
+
+  const active = _isActive(req.body.active);
+
+  const data = {
+    "title": req.body.title,
+    "body": req.body.body,
+    "image": imageLocation,
+    "author": req.body.author,
+    "created": new Date(),
+    "updated": new Date(),
+    "active": active
+  };
+
+  Blog
+    .create(data, (err, blog) => {
+      if (err) {
+        res.status(400).json(err);
+      } else {
+        console.log('Blog has been created');
+        res.status(201).json(blog);
+      }
+    });
 };
 
 // Blogs: Get One

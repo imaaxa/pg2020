@@ -7,15 +7,20 @@ const router = express.Router();
   const path = require('path');
   const fs = require('fs');
 
+  function getImageName(orgName, curComponent) {
+    // Build file name
+    return curComponent.toLowerCase() + '_' + Date.now() + path.extname(orgName);
+  }
+
+  function getImageDir (component) {
+    return path.join(__dirname, '../../public/images/' + component + '/' + new Date().getFullYear() + '/' + new Date().getMonth() + '/');
+  }
+
   // Set image storage options
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      //const type = req.body.type;
-      const component = req.route.path.substring(1);
-
-      // Make directory for the image
-      const imageDir =
-        path.join(__dirname, '../../public/images/' + component + '/' + new Date().getFullYear() + '/' + new Date().getMonth() + '/');
+      // Get directory for the image
+      const imageDir = getImageDir(req.route.path.substring(1));
 
       // Create directory if it does not exist
       if (!fs.existsSync(imageDir)) {
@@ -26,7 +31,9 @@ const router = express.Router();
       cb(null, imageDir);
     },
     filename: function (req, file, cb) {
-      cb(null, 'blog_' + file.originalname);
+      // Get new file name with ext
+      imageName = getImageName(file.originalname, req.route.path.substring(1));
+      cb(null, imageName);
     }
   });
 
@@ -46,7 +53,7 @@ const router = express.Router();
       return cb(null, true);
     } else {
       cb('Error: Images only', false);
-    } //*/
+    }
   };
 
   // Initial upload function
