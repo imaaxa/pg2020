@@ -12,8 +12,15 @@ const router = express.Router();
     return curComponent.toLowerCase() + '_' + Date.now() + path.extname(orgName);
   }
 
-  function getImageDir (component) {
-    return path.join(__dirname, '../../public/images/' + component + '/' + new Date().getFullYear() + '/' + new Date().getMonth() + '/');
+  function getImageDir(component) {
+    Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    function shortMonth(month) {
+      return Date.shortMonths[month];
+    }
+
+    const month = shortMonth(new Date().getMonth());
+    // Build directory path
+    return path.join(__dirname, '../../public/images/' + component + '/' + new Date().getFullYear() + '/' + month + '/');
   }
 
   // Set image storage options
