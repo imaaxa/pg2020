@@ -94,9 +94,43 @@ const blogsOne = (req, res) => {
 }; // Working
 
 // Blogs: Update One
+//   - Image updates are handled separately
 const blogsUpdateOne = (req, res) => {
-  res.status(200).json({"message": "blogsUpdateOne: success"});
-};
+  const blogId = req.params.blogId;
+
+  // Find specific record to update
+  Blog
+    .findById(blogId)
+    .exec((err, blog) => {
+      // Test for no results and error
+      if (!blog) {
+        return res.status(404).json({
+          "message": "Blog not found"
+        });
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Set new field values
+      blog.title = req.body.title;
+      blog.body = req.body.body;
+      blog.image = req.body.image;
+      blog.author = req.body.author;
+      blog.updated = new Date();
+      blog.active = _isActive(req.body.active);
+
+      //res.status(200).json({"message": "Working"});
+      blog
+        .save((err, blog) => {
+          if (err) {
+            res.status(400).json(err);
+          } else {
+            console.log('Blog has been updated');
+            res.status(200).json(blog);
+          }
+        });
+    });
+}; // Working
 
 // Blogs: Delete One
 const blogsDeleteOne = (req, res) => {
