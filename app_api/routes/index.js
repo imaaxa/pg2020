@@ -145,7 +145,7 @@ const router = express.Router();
     .delete(ctrlGenres.genresDeleteOne);
 // End Genres
 
-// Blog:
+// Blogs:
   // Blog: Controler
   const ctrlBlogs = require('../controllers/blog');
 
@@ -163,7 +163,27 @@ const router = express.Router();
     .get(ctrlBlogs.blogsOne)
     .put(ctrlBlogs.blogsUpdateOne)
     .delete(ctrlBlogs.blogsDeleteOne);
-// End Blog:
+// End Blogs:
+
+// Users:
+  // Users: Controler
+  const ctrlUsers = require('../controllers/users');
+
+  // Users: Get all, Create
+  router.route('/users')
+    .get(ctrlUsers.usersAll)
+    .post(ctrlUsers.usersCreate);
+
+  // Users: Get active
+  router.route('/users/active')
+    .get(ctrlUsers.usersActive);
+
+  // Users: Get one, Update one, Delete one
+  router.route('/users/:genreId')
+    .get(ctrlUsers.usersOne)
+    .put(ctrlUsers.usersUpdateOne)
+    .delete(ctrlUsers.usersDeleteOne);
+// End Users:
 
 // Export the router
 module.exports = router;

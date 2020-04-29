@@ -62,3 +62,4 @@ process.on('SIGTERM', () => {
 require('./blogs');
 require('./books');
 require('./genres');
+require('./users');
