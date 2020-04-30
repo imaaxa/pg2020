@@ -119,7 +119,6 @@ const blogsUpdateOne = (req, res) => {
       blog.updated = new Date();
       blog.active = _isActive(req.body.active);
 
-      //res.status(200).json({"message": "Working"});
       blog
         .save((err, blog) => {
           if (err) {
