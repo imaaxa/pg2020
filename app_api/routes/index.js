@@ -179,7 +179,7 @@ const router = express.Router();
     .get(ctrlUsers.usersActive);
 
   // Users: Get one, Update one, Delete one
-  router.route('/users/:genreId')
+  router.route('/users/:userId')
     .get(ctrlUsers.usersOne)
     .put(ctrlUsers.usersUpdateOne)
     .delete(ctrlUsers.usersDeleteOne);
