@@ -185,5 +185,25 @@ const router = express.Router();
     .delete(ctrlUsers.usersDeleteOne);
 // End Users:
 
+// Roles:
+// Roles: Controler
+const ctrlRoles = require('../controllers/roles');
+
+// Roles: Get all, Create
+router.route('/roles')
+  .get(ctrlRoles.rolesAll)
+  .post(ctrlRoles.rolesCreate);
+
+// Roles: Get active
+router.route('/roles/active')
+  .get(ctrlRoles.rolesActive);
+
+// Roles: Get one, Update one, Delete one
+router.route('/roles/:userId')
+  .get(ctrlRoles.rolesOne)
+  .put(ctrlRoles.rolesUpdateOne)
+  .delete(ctrlRoles.rolesDeleteOne);
+// End Roles:
+
 // Export the router
 module.exports = router;
