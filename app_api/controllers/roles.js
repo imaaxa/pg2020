@@ -3,39 +3,140 @@ const Role = mongoose.model('Role');
 
 // Roles: Get all
 const rolesAll = (req, res) => {
-  console.log("rolesAll suddess");
-  res.status(200).json({"message": "rolesAll success"})
+  Role
+    .find()
+    .exec((err, roles) => {
+      if (!roles) {
+        return res.status(404).json({"message": "Roles not found"});
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Return results
+      console.log("Roles have been found");
+      res.status(200).json(roles);
+    });
 };
 
 // Roles: Create
 const rolesCreate = (req, res) => {
-  console.log("rolesCreate suddess");
-  res.status(200).json({"message": "rolesCreate success"})
-};
+  // Create data object
+  const active = _isActive(req.body.active);
+  const data = {
+    "title": req.body.title,
+    "active": active
+  };
+
+  // Create role record
+  Role
+    .create(data, (err, role) => {
+      if (err) {
+        res.status(400).json(err);
+      } else {
+        console.log('Role has been created');
+        res.status(201).json(role);
+      }
+    });
+}; // Working
 
 // Roles: Get active
 const rolesActive = (req, res) => {
-  console.log("rolesActive suddess");
-  res.status(200).json({"message": "rolesActive success"})
-};
+  Role
+    .find({active: "true"})
+    .exec((err, roles) => {
+      if (!roles) {
+        return res.status(404).json({
+          "message": "Roles not found"
+        });
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Return results
+      console.log("Roles have been found");
+      res.status(200).json(roles);
+    });
+}; // Working
 
 // Roles: Get one
 const rolesOne = (req, res) => {
-  console.log("rolesOne suddess");
-  res.status(200).json({"message": "rolesOne success"})
-};
+  const roleId = req.params.roleId;
+
+  Role
+    .findById(roleId)
+    .exec((err, role) => {
+      if (!role) {
+        return res.status(404).json({"message": "Role not found"});
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Return results
+      console.log("Role has been found");
+      res.status(200).json(role);
+    });
+}; // Working
 
 // Roles: Update one
 const rolesUpdateOne = (req, res) => {
-  console.log("rolesUpdateOne suddess");
-  res.status(200).json({"message": "rolesUpdateOne success"})
-};
+  const roleId = req.params.roleId;
+
+  Role
+    .findById(roleId)
+    .exec((err, role) => {
+      if (!role) {
+        return res.status(404).json({
+          "message": "Role not found"
+        });
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Change values and save
+      role.active = _isActive(req.body.active);
+      role.title = req.body.title;
+      role
+        .save((err, results) => {
+          if (err) {
+            res.status(400).json(err);
+          } else {
+            // Return results
+            console.log("Role active status saved");
+            res.status(200).json(results);
+          }
+        });
+    });
+}; // Working
 
 // Roles: Delete one
 const rolesDeleteOne = (req, res) => {
-  console.log("rolesDeleteOne suddess");
-  res.status(200).json({"message": "rolesDeleteOne success"})
-};
+  const roleId = req.params.roleId;
+
+  Role
+    .findById(roleId)
+    .exec((err, role) => {
+      if (!role) {
+        return res.status(404).json({
+          "message": "Role not found"
+        });
+      } else if (err) {
+        return res.status(404).json(err);
+      }
+
+      // Change active status and save
+      role.active = _isActive(req.body.active);
+      role
+        .save((err, results) => {
+          if (err) {
+            res.status(400).json(err);
+          } else {
+            // Return results
+            console.log("Role active status saved");
+            res.status(200).json(role);
+          }
+        });
+    });
+}; // Working
 
 // Determin active
 function _isActive(data = 'undefined') {

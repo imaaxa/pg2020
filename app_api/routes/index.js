@@ -199,7 +199,7 @@ const router = express.Router();
     .get(ctrlRoles.rolesActive);
 
   // Roles: Get one, Update one, Delete one
-  router.route('/roles/:userId')
+  router.route('/roles/:roleId')
     .get(ctrlRoles.rolesOne)
     .put(ctrlRoles.rolesUpdateOne)
     .delete(ctrlRoles.rolesDeleteOne);
