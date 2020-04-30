@@ -63,3 +63,4 @@ require('./blogs');
 require('./books');
 require('./genres');
 require('./users');
+require('./roles');
